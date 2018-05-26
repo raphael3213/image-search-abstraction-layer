@@ -4,7 +4,7 @@
 // init project
 var express = require('express');
 var app = express();
-var bing = require('node-bing-api')({ accKey: "6fc8cfa19f0b4218b8e57db73c058442" });
+var bing = require('node-bing-api')({ accKey: "a98ec60e062a41c3a88313e97e93caea" });
 var mongo=require('mongodb').MongoClient
 var url=process.env.MONGOLAB_URI;
 
@@ -46,19 +46,21 @@ app.get("/imager/:img*",function(req,res,next)
     else if(off>1){
     soff=off+1;
     }
+    off=1*off;
   }
   bing.images(search, {
-  count: (10*soff),   // Number of results (max 50)
-  offset: (10*off)    // Skip first 3 result
+  count: 10*soff,   
+  offset: Math.random()
   }, function(error, rez, body){
     
+    if(error) console.log(error);
     var disp=[];
     console.log(body);
-    
+    console.log("yo");
     for(var i=0;i<10;i++)
     {
       disp.push({"URL":body.value[i].webSearchUrl,"Name":body.value[i].name,"thumbnail":body.value[i].thumbnailUrl,"context":body.value[i].hostPageDisplayUrl});
-      
+      //disp.push("/n");
     }
     res.json(disp);
     
