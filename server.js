@@ -33,6 +33,34 @@ app.get("/imager/:img*",function(req,res,next)
       client.close()
                 });
 });
+  var soff=1;
+  if(off)
+  {
+    if(off==1)
+    {
+      off=0
+      soff=1
+    }
+    else if(off>1){
+    soff=off+1;
+    }
+  }
+  bing.images("Ninja Turtles", {
+  count: (10*soff),   // Number of results (max 50)
+  offset: (10*off)    // Skip first 3 result
+  }, function(error, res, body){
+    
+    var disp=[];
+    for(var i=0;i<10;i++)
+    {
+      disp.push(body.value[i].webSearchURL);
+      disp.push(body.value[i].webSearchURL);
+      disp.push(body.value[i].webSearchURL);
+      disp.push(body.value[i].webSearchURL);
+    }
+  });
+  
+});
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
