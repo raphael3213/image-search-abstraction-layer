@@ -36,7 +36,7 @@ app.get("/imager/:img*",function(req,res,next)
                 });
 });
   var soff=1;
-  if(off)
+  if(off!=null)
   {
     if(off==1)
     {
@@ -47,10 +47,11 @@ app.get("/imager/:img*",function(req,res,next)
     soff=off+1;
     }
     off=1*off;
+    
   }
   bing.images(search, {
   count: 10*soff,   
-  offset: Math.random()
+  offset: 4
   }, function(error, rez, body){
     
     if(error) console.log(error);
@@ -66,6 +67,20 @@ app.get("/imager/:img*",function(req,res,next)
     
   });
   
+});
+
+app.get('/finder',function(req,res,err){
+        
+mongo.connect(url,function(err,client)
+                {
+    var db1=client.db('hist');
+    var coll=db1.collection('mainer');
+    
+    coll.find({}).toArray(function(err,data){
+    
+    
+    });;
+});
 });
 
 // listen for requests :)
