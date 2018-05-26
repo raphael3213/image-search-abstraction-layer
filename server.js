@@ -76,9 +76,10 @@ mongo.connect(url,function(err,client)
     var db1=client.db('hist');
     var coll=db1.collection('mainer');
     
-    coll.find({}).toArray(function(err,data){
+    coll.find({}).project({_id:0}).toArray(function(err,data){
     
-    
+      res.json(data);
+    client.close();
     });;
 });
 });
