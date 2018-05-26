@@ -29,6 +29,8 @@ app.get("/imager/:img*",function(req,res,next)
       "searchTerm":search,
       "date":new Date()
     },function(err,data){
+      
+      if(err) console.log(err);
       console.log("logged");
       client.close()
                 });
@@ -45,19 +47,21 @@ app.get("/imager/:img*",function(req,res,next)
     soff=off+1;
     }
   }
-  bing.images("Ninja Turtles", {
+  bing.images(search, {
   count: (10*soff),   // Number of results (max 50)
   offset: (10*off)    // Skip first 3 result
-  }, function(error, res, body){
+  }, function(error, rez, body){
     
     var disp=[];
+    console.log(body);
+    
     for(var i=0;i<10;i++)
     {
-      disp.push(body.value[i].webSearchURL);
-      disp.push(body.value[i].webSearchURL);
-      disp.push(body.value[i].webSearchURL);
-      disp.push(body.value[i].webSearchURL);
+      disp.push({"URL":body.value[i].webSearchUrl,"Name":body.value[i].name,"thumbnail":body.value[i].thumbnailUrl,"context":body.value[i].hostPageDisplayUrl});
+      
     }
+    res.json(disp);
+    
   });
   
 });
